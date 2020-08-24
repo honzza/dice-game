@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
             dice.setAttribute('id', i)
             diceField.appendChild(dice)
             diceArray.push(dice)
+
+            const dot = document.createElement('span')
+            dot.setAttribute('id', 1)
+            dice.appendChild(dot)
+            //<span id="2" style="visibility:hidden"></span>
         }
     }
 
