@@ -43,12 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						
 			for(let j = 0; j < 9; j++) {
 				const dot = document.getElementById(i.toString() + j.toString())
-				if(dotsDieDefinition.includes(j)) {
-					dot.style = 'visibility:hidden'
-				}
-				else {
-					dot.removeAttribute('style')
-				}
+				dotsDieDefinition.includes(j) ? dot.style = 'visibility:hidden' : dot.removeAttribute('style')
 			}
         }
 	}
