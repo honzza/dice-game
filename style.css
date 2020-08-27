@@ -14,7 +14,16 @@
     border: 2px solid grey;
 	display: flex;
 	flex-wrap: wrap;
+	cursor: pointer;
 	}
+	
+.die:hover {
+	box-shadow: 3px 3px 10px 0px #9fb4f2;
+}
+
+.selected {
+	background-color:#6b99d1;
+    }
 
 .dot {
     height: 20px;

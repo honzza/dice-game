@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			die.classList.add('die')
             diceField.appendChild(die)
 			let dotsDieDefinition = dotDefinition[diceValues[i]]
+			die.addEventListener('click', () => {
+				console.log(die.id)
+				die.classList.contains('selected') ? die.classList.remove('selected') : die.classList.add('selected')
+			})
 						
 			for(let j = 0; j < 9; j++) {
 				const dot = document.createElement('div')
@@ -57,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return diceValues
     }
+
 
     createDice()
 })
