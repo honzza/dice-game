@@ -21,10 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
         4: [5, 'unselected'],
         5: [6, 'unselected'],
     }
-    const options = {1: 100, 5: 50, 15: 150, 55: 100, 11: 200, 56: 50, 45: 50,
-        12: 100, 13: 100, 14: 100, 16: 100, 25: 50, 35: 50
-    }
+    const oneValues = {1: 100, 11: 200, 111: 1000, 1111: 2000, 11111: 4000, 111111: 8000}
+    const twoValues = {222: 200, 2222: 400, 22222: 800, 222222: 1600}
+    const threeValues = {333: 300, 3333: 600, 33333: 1200, 333333: 2400}
+    const fourValues = {444: 400, 4444: 800, 44444: 1600, 444444: 3200}
+    const fiveValues = {5: 50, 55: 100, 555: 500, 5555: 1000, 55555: 2000, 555555: 4000}
+    const sixValues = {666: 600, 6666: 1200, 66666: 2400, 666666: 4800}
     
+    //initialize dice field
     function createDice(diceDef) {
 		for(let i = 0; i < Object.keys(diceDef).length; i++) {
             const dice = document.createElement('div')
@@ -52,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //update dice after roll
 	function updateDice(diceDef) {
         for(let i = 0; i < Object.keys(diceDef).length; i++) {
             const dice = document.getElementById(i)
@@ -66,14 +71,49 @@ document.addEventListener('DOMContentLoaded', () => {
 		return diceDef
 	}
 
+    //get dice values, process and update score based on dice selection
     function updateScore() {
-        let diceValues = [], rollScore = 0
+        let rollScore = 0
+        let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
         for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
-            if(diceDef[i][1] === 'selected') diceValues.push(diceDef[i][0])
+            if(diceDef[i][1] === 'selected') {
+                switch (diceDef[i][0]) {
+                    case 1:
+                        ones += '1'
+                        break
+                    case 2:
+                        twos += '2'
+                        break
+                    case 3:
+                        threes += '3'
+                        break
+                    case 4:
+                        fours += '4'
+                        break
+                    case 5:
+                        fives += '5'
+                        break
+                    case 6:
+                        sixs += '6'
+                        break
+                }
+            }
         }
-        diceValues = diceValues.sort().join('')
-        if(options[diceValues]) rollScore = options[diceValues]
+        console.log(ones, twos, threes, fours, fives, sixs)
+        
+        if(oneValues[ones]) rollScore += oneValues[ones]
+        if(twoValues[twos]) rollScore += twoValues[twos]
+        if(threeValues[threes]) rollScore += threeValues[threes]
+        if(fourValues[fours]) rollScore += fourValues[fours]
+        if(fiveValues[fives]) rollScore += fiveValues[fives]
+        if(sixValues[sixs]) rollScore += sixValues[sixs]
+        if((ones + twos + threes + fours + fives + sixs) === '123456') rollScore = 1500
+        if(((ones.length + twos.length + threes.length + fours.length + fives.length + sixs.length) === 6) & (
+            (ones.length <= 2) & (twos.length <= 2) & (threes.length <= 2) & 
+            (fours.length <= 2) & (fives.length <= 2) & (sixs.length <= 2))) rollScore = 1000
+
         score.innerText = 'roll score ' + rollScore
+
     }
 
     createDice(diceDef)
