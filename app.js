@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDice(diceDef)
     })
     const score = document.getElementById('score')
+    const total = document.getElementById('total')
     const dotDef = [
 			[0,1,2,3,5,6,7,8],
 			[0,1,3,4,5,7,8],
@@ -27,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const fourValues = {444: 400, 4444: 800, 44444: 1600, 444444: 3200}
     const fiveValues = {5: 50, 55: 100, 555: 500, 5555: 1000, 55555: 2000, 555555: 4000}
     const sixValues = {666: 600, 6666: 1200, 66666: 2400, 666666: 4800}
+
+    let totalScore = 0
     
     //initialize dice field
     function createDice(diceDef) {
@@ -107,13 +110,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if(fourValues[fours]) rollScore += fourValues[fours]
         if(fiveValues[fives]) rollScore += fiveValues[fives]
         if(sixValues[sixs]) rollScore += sixValues[sixs]
+        
         if((ones + twos + threes + fours + fives + sixs) === '123456') rollScore = 1500
-        if(((ones.length + twos.length + threes.length + fours.length + fives.length + sixs.length) === 6) & (
-            (ones.length <= 2) & (twos.length <= 2) & (threes.length <= 2) & 
-            (fours.length <= 2) & (fives.length <= 2) & (sixs.length <= 2))) rollScore = 1000
+        
+        if((((ones.length === 2) || (ones.length === 0)) &
+            ((twos.length === 2) || (twos.length === 0)) &
+            ((threes.length === 2) || (threes.length === 0)) &
+            ((fours.length === 2) || (fours.length === 0)) &
+            ((fives.length === 2) || (fives.length === 0)) &
+            ((sixs.length === 2) || (sixs.length === 0))) &
+            ((ones.length + twos.length + threes.length +
+            fours.length + fives.length + sixs.length) === 6)) rollScore = 1000
 
         score.innerText = 'roll score ' + rollScore
-
+        let tempScore = totalScore + rollScore
+        total.innerText = 'total score ' + tempScore
+        tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore') 
     }
 
     createDice(diceDef)

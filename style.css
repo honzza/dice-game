@@ -46,6 +46,7 @@
 	padding: 10px 50px;
     text-decoration: none;
     transition-duration: 0.4s;
+    width: 270px;
     }
 
 .btn:hover {
@@ -59,7 +60,6 @@
     }
 
 label {
-    background-color:#f56ede;
     border-radius: 5px;
     border: none;
 	display: inline-block;
@@ -68,4 +68,17 @@ label {
 	font-size: 25px;
     padding: 10px 50px;
     text-decoration: none;
+    width: 170px;
+    }
+
+#score {
+    background-color:#f56ede;
+    }
+
+#total {
+    background-color: grey;
+    }
+
+.lowscore {
+    box-shadow: 3px 3px 10px 0px red;
     }
