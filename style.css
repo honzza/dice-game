@@ -34,7 +34,6 @@
     }
     
 .btn {
-	
 	background-color:#8aa9de;
     border-radius: 5px;
     border: none;
@@ -46,7 +45,7 @@
 	padding: 10px 50px;
     text-decoration: none;
     transition-duration: 0.4s;
-    width: 270px;
+    width: 285px;
     }
 
 .btn:hover {
@@ -68,7 +67,7 @@ label {
 	font-size: 25px;
     padding: 10px 50px;
     text-decoration: none;
-    width: 170px;
+    width: 185px;
     }
 
 #score {
