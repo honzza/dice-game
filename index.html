@@ -2,25 +2,26 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="UTF-8">
-        <title>Dice game</title>
+        <title>dice game</title>
         <link rel="stylesheet" href="style.css"></link>
         <script src="app.js" charset="utf-8"></script>
         <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     </head>
     <body>
-
-        <div class="dice-field"></div>
-        <div>
-            <p>
+        <div class="container">
+            <div class="dice-field">
+            </div>
+            <div>
                 <button class="btn" id="roll"><i class="fas fa-dice"></i> roll dice</button>
-            </p>
-        </div>
-        <div>
-            <p>
+                <button class="btn" id="round">close round</button>
+            </div>
+            <div>
                 <label id="score"></label>
                 <label id="total"></label>
-            </p>
+            </div>
+            <div class="info">
+                v 0.7.0 dice game, honzza dvorak
+            </div>
         </div>
-
     </body>
 </html>
