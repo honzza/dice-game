@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const diceField = document.querySelector('.dice-field')
+    const diceField = document.getElementById('dice-field')
     const rollButton = document.getElementById('roll')
     rollButton.addEventListener('click', () => {
         updateDice(diceDef)
