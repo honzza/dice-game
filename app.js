@@ -77,9 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //get dice values, process and update score based on dice selection
     function updateScore() {
         let rollScore = 0
+        rollButton.setAttribute('disabled', true)
         let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
         for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
             if(diceDef[i][1] === 'selected') {
+                rollButton.removeAttribute('disabled')
                 switch (diceDef[i][0]) {
                     case 1:
                         ones += '1'
@@ -125,7 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
         score.innerText = 'roll score ' + rollScore
         let tempScore = totalScore + rollScore
         total.innerText = 'total score ' + tempScore
-        tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore') 
+        tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
+        
     }
 
     createDice(diceDef)

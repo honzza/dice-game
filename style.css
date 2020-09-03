@@ -51,7 +51,7 @@ div, button, label {
     transition-duration: 0.4s;
 }
 
-.btn:hover {
+.btn:hover:enabled {
     background-color:#6b99d1;
     box-shadow: 3px 3px 10px 0px #9fb4f2;
 }
@@ -59,6 +59,11 @@ div, button, label {
 .btn:active {
     position: relative;
     top: 1px;
+}
+
+.btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 label {
