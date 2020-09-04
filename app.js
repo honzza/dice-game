@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const diceField = document.getElementById('dice-field')
     const rollButton = document.getElementById('roll')
     rollButton.addEventListener('click', () => {
-        updateDice(diceDef)
+        closeRoll()
+		updateDice(diceDef)
     })
     const score = document.getElementById('score')
     const total = document.getElementById('total')
@@ -15,12 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
             [1,4,7],
     ]
 	let diceDef = {
-        0: [1, 'unselected'],
-        1: [2, 'unselected'],
-        2: [3, 'unselected'],
-        3: [4, 'unselected'],
-        4: [5, 'unselected'],
-        5: [6, 'unselected'],
+        0: [1, 'unselected', true],
+        1: [2, 'unselected', true],
+        2: [3, 'unselected', true],
+        3: [4, 'unselected', true],
+        4: [5, 'unselected', true],
+        5: [6, 'unselected', true],
     }
     const oneValues = {1: 100, 11: 200, 111: 1000, 1111: 2000, 11111: 4000, 111111: 8000}
     const twoValues = {222: 200, 2222: 400, 22222: 800, 222222: 1600}
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sixValues = {666: 600, 6666: 1200, 66666: 2400, 666666: 4800}
 
     let totalScore = 0
+	let rollScore
     
     //initialize dice field
     function createDice(diceDef) {
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             diceField.appendChild(dice)
 			let dotsDice = dotDef[diceDef[i][0]-1]
 			dice.addEventListener('click', () => {
-				if(dice.classList.contains('selected')) {
+				if(dice.classList.contains('selected') && !dice.classList.contains('disabled')) {
                     dice.classList.remove('selected')
                     diceDef[i][1] = 'unselected'
                 } else {
@@ -76,12 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //get dice values, process and update score based on dice selection
     function updateScore() {
-        let rollScore = 0
-        rollButton.setAttribute('disabled', true)
+        rollScore = 0
+        //rollButton.setAttribute('disabled', true)
         let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
         for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
-            if(diceDef[i][1] === 'selected') {
-                rollButton.removeAttribute('disabled')
+            if(diceDef[i][1] === 'selected' & diceDef[i][2] === true) {
+                //rollButton.removeAttribute('disabled')
                 switch (diceDef[i][0]) {
                     case 1:
                         ones += '1'
@@ -104,8 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        console.log(ones, twos, threes, fours, fives, sixs)
-        
+         
         if(oneValues[ones]) rollScore += oneValues[ones]
         if(twoValues[twos]) rollScore += twoValues[twos]
         if(threeValues[threes]) rollScore += threeValues[threes]
@@ -128,8 +129,21 @@ document.addEventListener('DOMContentLoaded', () => {
         let tempScore = totalScore + rollScore
         total.innerText = 'total score ' + tempScore
         tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
+		rollScore > 0 ? rollButton.removeAttribute('disabled') : rollButton.setAttribute('disabled', true)
         
     }
+
+	function closeRoll() {
+		for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
+			if(diceDef[i][1] === 'selected') {
+				diceDef[i][2] = false
+				const dice = document.getElementById(i)
+				dice.classList.add('disabled')
+			}
+		}
+		totalScore += rollScore
+		updateScore()
+	}
 
     createDice(diceDef)
     updateDice(diceDef)

@@ -24,12 +24,17 @@ div, button, label {
 	cursor: pointer;
 }
 
-.dice:hover {
+.dice:hover:not(.disabled) {
 	box-shadow: 3px 3px 10px 0px #9fb4f2;
 }
 
 .selected {
 	background-color:#6b99d1;
+}
+
+.disabled {
+	background-color:grey;
+	cursor: not-allowed;
 }
 
 .dot {
