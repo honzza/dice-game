@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const diceField = document.getElementById('dice-field')
     const rollButton = document.getElementById('roll')
+    const roundButton = document.getElementById('round')
     rollButton.addEventListener('click', () => {
         closeRoll()
 		updateDice(diceDef)
+    })
+    roundButton.addEventListener('click', () => {
+        closeRound()
     })
     const score = document.getElementById('score')
     const total = document.getElementById('total')
@@ -144,6 +148,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		totalScore += rollScore
 		updateScore()
 	}
+
+    function closeRound() {
+        totalScore += rollScore
+        if(rollScore < 350) {
+            alert('ROUND OVER! YOUR SCORE IS 0!')
+        } else {
+            alert('ROUND OVER! YOUR SCORE IS ' + totalScore)
+        }
+        location.reload()
+    }
 
     createDice(diceDef)
     updateDice(diceDef)
