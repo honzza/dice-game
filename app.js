@@ -83,11 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //get dice values, process and update score based on dice selection
     function updateScore() {
         rollScore = 0
-        //rollButton.setAttribute('disabled', true)
         let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
         for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
-            if(diceDef[i][1] === 'selected' & diceDef[i][2] === true) {
-                //rollButton.removeAttribute('disabled')
+            if(diceDef[i][1] === 'selected' && diceDef[i][2] === true) {
                 switch (diceDef[i][0]) {
                     case 1:
                         ones += '1'
@@ -120,12 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if((ones + twos + threes + fours + fives + sixs) === '123456') rollScore = 1500
         
-        if((((ones.length === 2) || (ones.length === 0)) &
-            ((twos.length === 2) || (twos.length === 0)) &
-            ((threes.length === 2) || (threes.length === 0)) &
-            ((fours.length === 2) || (fours.length === 0)) &
-            ((fives.length === 2) || (fives.length === 0)) &
-            ((sixs.length === 2) || (sixs.length === 0))) &
+        if((((ones.length === 2) || (ones.length === 0)) &&
+            ((twos.length === 2) || (twos.length === 0)) &&
+            ((threes.length === 2) || (threes.length === 0)) &&
+            ((fours.length === 2) || (fours.length === 0)) &&
+            ((fives.length === 2) || (fives.length === 0)) &&
+            ((sixs.length === 2) || (sixs.length === 0))) &&
             ((ones.length + twos.length + threes.length +
             fours.length + fives.length + sixs.length) === 6)) rollScore = 1000
 
@@ -133,10 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let tempScore = totalScore + rollScore
         total.innerText = 'total score ' + tempScore
         tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
-		rollScore > 0 ? rollButton.removeAttribute('disabled') : rollButton.setAttribute('disabled', true)
+        rollScore > 0 ? rollButton.removeAttribute('disabled') : rollButton.setAttribute('disabled', true)
         
+        roundButton.removeAttribute('disabled')
+        let countSelected = 0
+        for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
+            if(diceDef[i][1] === 'selected') countSelected++ 
+        }
+        if((countSelected === 6) && (rollScore > 0)) roundButton.setAttribute('disabled', true)
+                
     }
 
+    //closes current roll, gets new dice values
 	function closeRoll() {
 		for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
 			if(diceDef[i][1] === 'selected') {
@@ -149,9 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		updateScore()
 	}
 
+    //closes game round and alerts score
     function closeRound() {
         totalScore += rollScore
-        if(rollScore < 350) {
+        if((totalScore < 350) || (rollScore === 0)) {
             alert('ROUND OVER! YOUR SCORE IS 0!')
         } else {
             alert('ROUND OVER! YOUR SCORE IS ' + totalScore)
