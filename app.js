@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const roundButton = document.getElementById('round')
     rollButton.addEventListener('click', () => {
         closeRoll()
-		updateDice(diceDef)
+        updateDice(diceDef)
+        console.log(diceDef)
     })
     roundButton.addEventListener('click', () => {
         closeRound()
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         4: [5, 'unselected', true],
         5: [6, 'unselected', true],
     }
+    const diceDefCopy = JSON.parse(JSON.stringify(diceDef))
     const oneValues = {1: 100, 11: 200, 111: 1000, 1111: 2000, 11111: 4000, 111111: 8000}
     const twoValues = {222: 200, 2222: 400, 22222: 800, 222222: 1600}
     const threeValues = {333: 300, 3333: 600, 33333: 1200, 333333: 2400}
@@ -83,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //get dice values, process and update score based on dice selection
     function updateScore() {
         rollScore = 0
-		let numOfDices = 0
+		let numOfDice = 0
         let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
         for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
             if(diceDef[i][1] === 'selected' && diceDef[i][2] === true) {
@@ -112,32 +114,32 @@ document.addEventListener('DOMContentLoaded', () => {
          
         if(oneValues[ones]) {
 			rollScore += oneValues[ones]
-			numOfDices += ones.length
+			numOfDice += ones.length
 		}
         if(twoValues[twos]) {
 			rollScore += twoValues[twos]
-			numOfDices += twos.length
+			numOfDice += twos.length
 		}
         if(threeValues[threes]) {
 			rollScore += threeValues[threes]
-			numOfDices += threes.length
+			numOfDice += threes.length
 		}
         if(fourValues[fours]) {
 			rollScore += fourValues[fours]
-			numOfDices += fours.length
+			numOfDice += fours.length
 		}
         if(fiveValues[fives]) {
 			rollScore += fiveValues[fives]
-			numOfDices += fives.length
+			numOfDice += fives.length
 		}
         if(sixValues[sixs]) {
 			rollScore += sixValues[sixs]
-			numOfDices += sixs.length
+			numOfDice += sixs.length
 		}
         
         if((ones + twos + threes + fours + fives + sixs) === '123456') {
 			rollScore = 1500
-			numOfDices = 6
+			numOfDice = 6
 		}
         
         if((((ones.length === 2) || (ones.length === 0)) &&
@@ -149,37 +151,52 @@ document.addEventListener('DOMContentLoaded', () => {
             ((ones.length + twos.length + threes.length +
 			fours.length + fives.length + sixs.length) === 6)) {
 			rollScore = 1000
-			numOfDices = 6
+			numOfDice = 6
 		}
 
-		console.log(numOfDices)
-		//porovnat počet s aktuálně vybranými (ne šedivými) a...
-		
+		console.log(numOfDice)
+				
         score.innerText = 'roll score ' + rollScore
         let tempScore = totalScore + rollScore
         total.innerText = 'total score ' + tempScore
         tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
-        rollScore > 0 ? rollButton.removeAttribute('disabled') : rollButton.setAttribute('disabled', true)
-        
+       
         roundButton.removeAttribute('disabled')
-        let countSelected = 0
+        let countSelected = 0 
+        let countSelectedEnabled = 0
         for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
-            if(diceDef[i][1] === 'selected') countSelected++ 
+            if(diceDef[i][1] === 'selected') countSelected++
+            if((diceDef[i][1] === 'selected') && (diceDef[i][2] === true)) countSelectedEnabled++
         }
+
+        console.log('enabled', countSelectedEnabled)
+
         if((countSelected === 6) && (rollScore > 0)) roundButton.setAttribute('disabled', true)
-                
+        if((rollScore > 0) && (countSelectedEnabled === numOfDice)) {
+            rollButton.removeAttribute('disabled')
+        } else {
+            rollButton.setAttribute('disabled', true)
+        }       
     }
 
     //closes current roll, gets new dice values
 	function closeRoll() {
+        let countSelected = 0
 		for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
 			if(diceDef[i][1] === 'selected') {
+                countSelected ++
 				diceDef[i][2] = false
 				const dice = document.getElementById(i)
 				dice.classList.add('disabled')
 			}
 		}
-		totalScore += rollScore
+        if(countSelected === 6) {
+            console.log('countselected',countSelected)
+            diceDef = JSON.parse(JSON.stringify(diceDefCopy))
+            console.log('novy', diceDef)
+            //musim vycistit i classlist u kostek
+        }
+        totalScore += rollScore
 		updateScore()
 	}
 
