@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //get dice values, process and update score based on dice selection
     function updateScore() {
         rollScore = 0
+		let numOfDices = 0
         let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
         for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
             if(diceDef[i][1] === 'selected' && diceDef[i][2] === true) {
@@ -109,14 +110,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
          
-        if(oneValues[ones]) rollScore += oneValues[ones]
-        if(twoValues[twos]) rollScore += twoValues[twos]
-        if(threeValues[threes]) rollScore += threeValues[threes]
-        if(fourValues[fours]) rollScore += fourValues[fours]
-        if(fiveValues[fives]) rollScore += fiveValues[fives]
-        if(sixValues[sixs]) rollScore += sixValues[sixs]
+        if(oneValues[ones]) {
+			rollScore += oneValues[ones]
+			numOfDices += ones.length
+		}
+        if(twoValues[twos]) {
+			rollScore += twoValues[twos]
+			numOfDices += twos.length
+		}
+        if(threeValues[threes]) {
+			rollScore += threeValues[threes]
+			numOfDices += threes.length
+		}
+        if(fourValues[fours]) {
+			rollScore += fourValues[fours]
+			numOfDices += fours.length
+		}
+        if(fiveValues[fives]) {
+			rollScore += fiveValues[fives]
+			numOfDices += fives.length
+		}
+        if(sixValues[sixs]) {
+			rollScore += sixValues[sixs]
+			numOfDices += sixs.length
+		}
         
-        if((ones + twos + threes + fours + fives + sixs) === '123456') rollScore = 1500
+        if((ones + twos + threes + fours + fives + sixs) === '123456') {
+			rollScore = 1500
+			numOfDices = 6
+		}
         
         if((((ones.length === 2) || (ones.length === 0)) &&
             ((twos.length === 2) || (twos.length === 0)) &&
@@ -125,8 +147,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ((fives.length === 2) || (fives.length === 0)) &&
             ((sixs.length === 2) || (sixs.length === 0))) &&
             ((ones.length + twos.length + threes.length +
-            fours.length + fives.length + sixs.length) === 6)) rollScore = 1000
+			fours.length + fives.length + sixs.length) === 6)) {
+			rollScore = 1000
+			numOfDices = 6
+		}
 
+		console.log(numOfDices)
+		//porovnat počet s aktuálně vybranými (ne šedivými) a...
+		
         score.innerText = 'roll score ' + rollScore
         let tempScore = totalScore + rollScore
         total.innerText = 'total score ' + tempScore
