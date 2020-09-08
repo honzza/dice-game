@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     rollButton.addEventListener('click', () => {
         closeRoll()
         updateDice(diceDef)
-        console.log(diceDef)
     })
     roundButton.addEventListener('click', () => {
         closeRound()
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         4: [5, 'unselected', true],
         5: [6, 'unselected', true],
     }
-    const diceDefCopy = JSON.parse(JSON.stringify(diceDef))
     const oneValues = {1: 100, 11: 200, 111: 1000, 1111: 2000, 11111: 4000, 111111: 8000}
     const twoValues = {222: 200, 2222: 400, 22222: 800, 222222: 1600}
     const threeValues = {333: 300, 3333: 600, 33333: 1200, 333333: 2400}
@@ -51,9 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				if(dice.classList.contains('selected') && !dice.classList.contains('disabled')) {
                     dice.classList.remove('selected')
                     diceDef[i][1] = 'unselected'
+					console.log('nevybrano', diceDef)
                 } else {
                     dice.classList.add('selected')
                     diceDef[i][1] = 'selected'
+					console.log('vybrano', diceDef)
                 }
                 updateScore()
             })
@@ -190,14 +190,19 @@ document.addEventListener('DOMContentLoaded', () => {
 				dice.classList.add('disabled')
 			}
 		}
-        if(countSelected === 6) {
-            console.log('countselected',countSelected)
-            diceDef = JSON.parse(JSON.stringify(diceDefCopy))
-            console.log('novy', diceDef)
-            //musim vycistit i classlist u kostek
-        }
-        totalScore += rollScore
+        
+		totalScore += rollScore
 		updateScore()
+		
+		if(countSelected === 6) {
+            for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
+				const dice = document.getElementById(i)
+				dice.classList.remove('selected')
+				dice.classList.remove('disabled')
+				diceDef[i][1] = 'unselected'
+				diceDef[i][2] = true
+			}
+        }
 	}
 
     //closes game round and alerts score
