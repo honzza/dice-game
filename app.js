@@ -49,12 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				if(dice.classList.contains('selected') && !dice.classList.contains('disabled')) {
                     dice.classList.remove('selected')
                     diceDef[i][1] = 'unselected'
-					console.log('nevybrano', diceDef)
-                } else {
+				} else {
                     dice.classList.add('selected')
                     diceDef[i][1] = 'selected'
-					console.log('vybrano', diceDef)
-                }
+				}
                 updateScore()
             })
 			for(let j = 0; j < 9; j++) {
@@ -111,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-         
         if(oneValues[ones]) {
 			rollScore += oneValues[ones]
 			numOfDice += ones.length
@@ -136,12 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			rollScore += sixValues[sixs]
 			numOfDice += sixs.length
 		}
-        
         if((ones + twos + threes + fours + fives + sixs) === '123456') {
 			rollScore = 1500
 			numOfDice = 6
 		}
-        
         if((((ones.length === 2) || (ones.length === 0)) &&
             ((twos.length === 2) || (twos.length === 0)) &&
             ((threes.length === 2) || (threes.length === 0)) &&
@@ -153,14 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			rollScore = 1000
 			numOfDice = 6
 		}
-
-		console.log(numOfDice)
-				
         score.innerText = 'roll score ' + rollScore
         let tempScore = totalScore + rollScore
         total.innerText = 'total score ' + tempScore
         tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
-       
         roundButton.removeAttribute('disabled')
         let countSelected = 0 
         let countSelectedEnabled = 0
@@ -168,9 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if(diceDef[i][1] === 'selected') countSelected++
             if((diceDef[i][1] === 'selected') && (diceDef[i][2] === true)) countSelectedEnabled++
         }
-
-        console.log('enabled', countSelectedEnabled)
-
         if((countSelected === 6) && (rollScore > 0)) roundButton.setAttribute('disabled', true)
         if((rollScore > 0) && (countSelectedEnabled === numOfDice)) {
             rollButton.removeAttribute('disabled')
@@ -190,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				dice.classList.add('disabled')
 			}
 		}
-        
 		totalScore += rollScore
 		updateScore()
 		
@@ -220,5 +207,3 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDice(diceDef)
     updateScore()
 })
-
-//11:28
