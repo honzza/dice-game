@@ -8,7 +8,133 @@ document.addEventListener('DOMContentLoaded', () => {
             [1,3,5,7],
             [1,4,7],
     ]
-	    
+const scoreValues = [{},
+					 {1: 100, 2: 200, 3: 1000, 4: 2000, 5: 4000, 6: 8000}, 
+					 {3: 200, 4: 400, 5: 800, 6: 1600},
+					 {3: 300, 4: 600, 5: 1200, 6: 2400},
+					 {3: 400, 4: 800, 5: 1600, 6: 3200},
+					 {1: 50, 2: 100, 3: 500, 4: 1000, 5: 2000, 6: 4000},
+					 {3: 600, 4: 1200, 5: 2400, 6: 4800}
+					]
+	
+	class DiceField {
+		constructor(diceArray) {
+			this.diceArray = diceArray
+		}
+		
+		updateDice() {
+			let i = 0
+		    for(let element of this.diceArray) {
+				const dice = document.getElementById(i)
+				if(element.selected) continue
+				element.value = Math.floor(Math.random() * 6) + 1
+				for(let j = 0; j < 9; j++) {
+					const dot = document.getElementById(i.toString() + j.toString())
+					dotDef[element.value - 1].includes(j) ? dot.style = 'visibility:hidden' : dot.removeAttribute('style')
+				}
+				i++
+			}
+		}
+		updateScore() {
+			let valuesArray = []
+			let count = {}
+			for(let element of this.diceArray) {
+				if(element.selected && !element.disabled) valuesArray.push(element.value)
+			}
+			valuesArray.forEach(function(i) {count[i] = (count[i]||0) + 1})
+			
+			console.log(count)
+			
+					
+		//rollScore = 0
+        //let numOfDice = 0
+        //let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
+        
+            //    switch (diceDef[i][0]) {
+              //      case 1:
+                //        ones += '1'
+                  //      break
+            //        case 2:
+              //          twos += '2'
+                //        break
+                  //  case 3:
+                  //      threes += '3'
+                  //      break
+                 //   case 4:
+                 //       fours += '4'
+                   //     break
+                  //  case 5:
+                    //    fives += '5'
+                      //  break
+                  //  case 6:
+                    //    sixs += '6'
+                      //  break
+               // }
+           // }
+        //}
+        //if(oneValues[ones]) {
+			//rollScore += oneValues[ones]
+			//numOfDice += ones.length
+		//}
+        //if(twoValues[twos]) {
+			//rollScore += twoValues[twos]
+			//numOfDice += twos.length
+		//}
+        //if(threeValues[threes]) {
+			//rollScore += threeValues[threes]
+			//numOfDice += threes.length
+		//}
+        //if(fourValues[fours]) {
+			//rollScore += fourValues[fours]
+			//numOfDice += fours.length
+		//}
+        //if(fiveValues[fives]) {
+			//rollScore += fiveValues[fives]
+			//numOfDice += fives.length
+		//}
+        //if(sixValues[sixs]) {
+			//rollScore += sixValues[sixs]
+			//numOfDice += sixs.length
+		//}
+        //if((ones + twos + threes + fours + fives + sixs) === '123456') {
+			//rollScore = 1500
+			//numOfDice = 6
+		//}
+        //if((((ones.length === 2) || (ones.length === 0)) &&
+          //  ((twos.length === 2) || (twos.length === 0)) &&
+           // ((threes.length === 2) || (threes.length === 0)) &&
+            //((fours.length === 2) || (fours.length === 0)) &&
+          //  ((fives.length === 2) || (fives.length === 0)) &&
+           // ((sixs.length === 2) || (sixs.length === 0))) &&
+           // ((ones.length + twos.length + threes.length +
+		//	fours.length + fives.length + sixs.length) === 6)) {
+		//	rollScore = 1000
+		//	numOfDice = 6
+		//}
+        //score.innerText = 'roll score ' + rollScore
+        //let tempScore = totalScore + rollScore
+        //total.innerText = 'total score ' + tempScore
+        //tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
+        //roundButton.removeAttribute('disabled')
+        //let countSelected = 0 
+        //let countSelectedEnabled = 0
+        //for(let i = 0 ; i < Object.keys(diceDef).length; i++) {
+          //  if(diceDef[i][1] === 'selected') countSelected++
+            //if((diceDef[i][1] === 'selected') && (diceDef[i][2] === true)) countSelectedEnabled++
+        //}
+        //if((countSelected === 6) && (rollScore > 0)) roundButton.setAttribute('disabled', true)
+        //if((rollScore > 0) && (countSelectedEnabled === numOfDice)) {
+          //  rollButton.removeAttribute('disabled')
+        //} else {
+          //  rollButton.setAttribute('disabled', true)
+        //}       
+    //}
+			
+			
+			
+		}
+	}
+    
     class Dice {
 		constructor(value, selected, disabled) {
 			this.value = value
@@ -20,17 +146,16 @@ document.addEventListener('DOMContentLoaded', () => {
             dice.setAttribute('id', i)
             dice.classList.add('dice')
             diceField.appendChild(dice)
-                
-                //dice.addEventListener('click', () => {
-                    //if(dice.classList.contains('selected') && !dice.classList.contains('disabled')) {
-                      //  dice.classList.remove('selected')
-                        //diceDef[i][1] = 'unselected'
-                    //} else {
-                      //  dice.classList.add('selected')
-                        //diceDef[i][1] = 'selected'
-                    //}
-                    //updateScore()
-                //})
+            dice.addEventListener('click', () => {
+				if(this.selected && !this.disabled) {
+					dice.classList.remove('selected')
+					this.selected = false
+                } else {
+					dice.classList.add('selected')
+					this.selected = true
+                }
+                diceFieldObj.updateScore()
+            })
             for(let j = 0; j < 9; j++) {
                 const dot = document.createElement('div')
                 dot.setAttribute('id', (i.toString() + j.toString()))
@@ -41,14 +166,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 	}
 
-    diceArray = []
-
-    //create six dice objects
+    //create six dice objects and insert them in dice array
+	let diceArray = []
     for(let i = 0; i < 6; i++) {
         const diceObj = new Dice(i+1, false, false)
         diceObj.createDice(i)
         diceArray.push(diceObj)
-    }      	
-    
-    console.log(diceArray)
+    }
+	//create object containing all dice and set random dice values
+	const diceFieldObj = new DiceField(diceArray)
+	diceFieldObj.updateDice()
 })
