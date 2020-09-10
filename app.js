@@ -37,70 +37,25 @@ const scoreValues = [{},
 		}
 		updateScore() {
 			let valuesArray = []
-			let count = {}
+            let count = {}
+            let rollScore = 0
+            const allValues = [1, 2, 3, 4, 5, 6]
 			for(let element of this.diceArray) {
 				if(element.selected && !element.disabled) valuesArray.push(element.value)
-			}
-			valuesArray.forEach(function(i) {count[i] = (count[i]||0) + 1})
-			
-			console.log(count)
-			
+            }
+            if(valuesArray.length === allValues.length && valuesArray.sort().every(function(value, index) {
+                return value === allValues[index]})) {
+                rollScore = 1500
+            } else {
+                valuesArray.forEach(function(i) {count[i] = (count[i]||0) + 1})
+				Object.entries(count).forEach(([key, value]) => {
+                    if(scoreValues[key][value]) rollScore += scoreValues[key][value]
+                })
+            }
+            
+            console.log(rollScore)
 					
-		//rollScore = 0
-        //let numOfDice = 0
-        //let ones = '', twos = '', threes = '', fours = '', fives = '', sixs = ''
-        
-            //    switch (diceDef[i][0]) {
-              //      case 1:
-                //        ones += '1'
-                  //      break
-            //        case 2:
-              //          twos += '2'
-                //        break
-                  //  case 3:
-                  //      threes += '3'
-                  //      break
-                 //   case 4:
-                 //       fours += '4'
-                   //     break
-                  //  case 5:
-                    //    fives += '5'
-                      //  break
-                  //  case 6:
-                    //    sixs += '6'
-                      //  break
-               // }
-           // }
-        //}
-        //if(oneValues[ones]) {
-			//rollScore += oneValues[ones]
-			//numOfDice += ones.length
-		//}
-        //if(twoValues[twos]) {
-			//rollScore += twoValues[twos]
-			//numOfDice += twos.length
-		//}
-        //if(threeValues[threes]) {
-			//rollScore += threeValues[threes]
-			//numOfDice += threes.length
-		//}
-        //if(fourValues[fours]) {
-			//rollScore += fourValues[fours]
-			//numOfDice += fours.length
-		//}
-        //if(fiveValues[fives]) {
-			//rollScore += fiveValues[fives]
-			//numOfDice += fives.length
-		//}
-        //if(sixValues[sixs]) {
-			//rollScore += sixValues[sixs]
-			//numOfDice += sixs.length
-		//}
-        //if((ones + twos + threes + fours + fives + sixs) === '123456') {
-			//rollScore = 1500
-			//numOfDice = 6
-		//}
-        //if((((ones.length === 2) || (ones.length === 0)) &&
+		//if((((ones.length === 2) || (ones.length === 0)) &&
           //  ((twos.length === 2) || (twos.length === 0)) &&
            // ((threes.length === 2) || (threes.length === 0)) &&
             //((fours.length === 2) || (fours.length === 0)) &&
