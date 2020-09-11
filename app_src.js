@@ -7,8 +7,6 @@
     roundButton.addEventListener('click', () => {
         closeRound()
     })
-    const score = document.getElementById('score')
-    const total = document.getElementById('total')
     let totalScore = 0
 	let rollScore    
     
@@ -46,4 +44,3 @@
         }
         location.reload()
     }
-    updateScore()

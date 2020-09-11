@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-	const diceField = document.getElementById('dice-field')
 	const dotDef = [
 			[0,1,2,3,5,6,7,8],
 			[0,1,3,4,5,7,8],
@@ -8,20 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
             [1,3,5,7],
             [1,4,7],
     ]
-const scoreValues = [{},
-					 {1: 100, 2: 200, 3: 1000, 4: 2000, 5: 4000, 6: 8000}, 
-					 {3: 200, 4: 400, 5: 800, 6: 1600},
-					 {3: 300, 4: 600, 5: 1200, 6: 2400},
-					 {3: 400, 4: 800, 5: 1600, 6: 3200},
-					 {1: 50, 2: 100, 3: 500, 4: 1000, 5: 2000, 6: 4000},
-					 {3: 600, 4: 1200, 5: 2400, 6: 4800}
-					]
-	
 	class DiceField {
 		constructor(diceArray) {
 			this.diceArray = diceArray
 		}
-		
 		updateDice() {
 			let i = 0
 		    for(let element of this.diceArray) {
@@ -36,40 +25,39 @@ const scoreValues = [{},
 			}
 		}
 		updateScore() {
+			const scoreValues = [{},
+					 {1: 100, 2: 200, 3: 1000, 4: 2000, 5: 4000, 6: 8000}, 
+					 {3: 200, 4: 400, 5: 800, 6: 1600},
+					 {3: 300, 4: 600, 5: 1200, 6: 2400},
+					 {3: 400, 4: 800, 5: 1600, 6: 3200},
+					 {1: 50, 2: 100, 3: 500, 4: 1000, 5: 2000, 6: 4000},
+					 {3: 600, 4: 1200, 5: 2400, 6: 4800}
+					]
+			const score = document.getElementById('score')
+			const total = document.getElementById('total')
 			let valuesArray = []
             let count = {}
             let rollScore = 0
-            const allValues = [1, 2, 3, 4, 5, 6]
 			for(let element of this.diceArray) {
 				if(element.selected && !element.disabled) valuesArray.push(element.value)
             }
-            if(valuesArray.length === allValues.length && valuesArray.sort().every(function(value, index) {
-                return value === allValues[index]})) {
-                rollScore = 1500
-            } else {
-                valuesArray.forEach(function(i) {count[i] = (count[i]||0) + 1})
-				Object.entries(count).forEach(([key, value]) => {
-                    if(scoreValues[key][value]) rollScore += scoreValues[key][value]
-                })
-            }
-            
-            console.log(rollScore)
-					
-		//if((((ones.length === 2) || (ones.length === 0)) &&
-          //  ((twos.length === 2) || (twos.length === 0)) &&
-           // ((threes.length === 2) || (threes.length === 0)) &&
-            //((fours.length === 2) || (fours.length === 0)) &&
-          //  ((fives.length === 2) || (fives.length === 0)) &&
-           // ((sixs.length === 2) || (sixs.length === 0))) &&
-           // ((ones.length + twos.length + threes.length +
-		//	fours.length + fives.length + sixs.length) === 6)) {
-		//	rollScore = 1000
-		//	numOfDice = 6
-		//}
-        //score.innerText = 'roll score ' + rollScore
-        //let tempScore = totalScore + rollScore
-        //total.innerText = 'total score ' + tempScore
-        //tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
+            valuesArray.forEach(function(i) {count[i] = (count[i]||0) + 1})
+			const countArray = Object.entries(count)
+			countArray.forEach(([key, value]) => {if(scoreValues[key][value]) {rollScore += scoreValues[key][value]}})
+			if(countArray.length === 6) {rollScore = 1500}
+			if(countArray.length === 3) {
+				let valueTwo = true
+				countArray.forEach(([key, value]) => {if(value !== 2) valueTwo = false})
+				if(valueTwo) rollScore = 1000
+			}
+			
+			//ukončit to tady a z tlačítek udělat objekty?
+			
+			score.innerText = 'roll score ' + rollScore
+			let tempScore = totalScore + rollScore
+			total.innerText = 'total score ' + tempScore
+        
+		//tempScore < 350 ? total.classList.add('lowscore') : total.classList.remove('lowscore')
         //roundButton.removeAttribute('disabled')
         //let countSelected = 0 
         //let countSelectedEnabled = 0
@@ -89,7 +77,6 @@ const scoreValues = [{},
 			
 		}
 	}
-    
     class Dice {
 		constructor(value, selected, disabled) {
 			this.value = value
@@ -97,7 +84,8 @@ const scoreValues = [{},
 			this.disabled = disabled
         }
         createDice(i) {
-            const dice = document.createElement('div')
+            const diceField = document.getElementById('dice-field')
+			const dice = document.createElement('div')
             dice.setAttribute('id', i)
             dice.classList.add('dice')
             diceField.appendChild(dice)
@@ -131,4 +119,5 @@ const scoreValues = [{},
 	//create object containing all dice and set random dice values
 	const diceFieldObj = new DiceField(diceArray)
 	diceFieldObj.updateDice()
+	diceFieldObj.updateScore()
 })
