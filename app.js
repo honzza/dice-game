@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			countArray.forEach(([key, value]) => {if(value !== 2) valueTwo = false})
 			if(valueTwo) {
 				rollScore = 1000
-				countScoringDice = 3
+				countScoringDice = 6
 			}
 		}
 		
@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				element.disabled = false
 				i++
 			}
+			countSelected = 0
 		}
 	}
 
