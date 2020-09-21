@@ -1,99 +1,101 @@
-div, button, label {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-    margin: 5px;
-    font-family: Trebuchet MS;
+div,
+button,
+label {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 5px;
+  font-family: Trebuchet MS;
 }
 
 .container {
-	min-width: 299px;
-	max-width: 694px;
-	border: 2px solid grey;
-    border-radius: 25px;
-    padding: 10px;
-    background-color: #ececec;
+  min-width: 299px;
+  max-width: 694px;
+  border: 2px solid grey;
+  border-radius: 25px;
+  padding: 10px;
+  background-color: #ececec;
 }
 
 .dice {
-    width: 90px;
-    height: 90px;
-    border: 2px solid grey;
-    border-radius: 25px;
-    padding: 5px;
-	cursor: pointer;
+  width: 90px;
+  height: 90px;
+  border: 2px solid grey;
+  border-radius: 25px;
+  padding: 5px;
+  cursor: pointer;
 }
 
 .dice:hover:not(.disabled) {
-	box-shadow: 3px 3px 10px 0px #9fb4f2;
+  box-shadow: 3px 3px 10px 0px #9fb4f2;
 }
 
 .selected {
-	background-color:#6b99d1;
+  background-color: #6b99d1;
 }
 
 .disabled {
-	background-color:grey;
-	cursor: not-allowed;
+  background-color: grey;
+  cursor: not-allowed;
 }
 
 .dot {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: black;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: black;
 }
-    
+
 .btn {
-    width: 289px;
-    border: none;
-	border-radius: 5px;
-    padding: 10px 50px;
-	font-size: 25px;
-	color:#ffffff;
-    background-color:#8aa9de;
-	cursor: pointer;
-    transition-duration: 0.4s;
+  width: 289px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 50px;
+  font-size: 25px;
+  color: #ffffff;
+  background-color: #8aa9de;
+  cursor: pointer;
+  transition-duration: 0.4s;
 }
 
 .btn:hover:enabled {
-    background-color:#6b99d1;
-    box-shadow: 3px 3px 10px 0px #9fb4f2;
+  background-color: #6b99d1;
+  box-shadow: 3px 3px 10px 0px #9fb4f2;
 }
 
 .btn:active {
-    position: relative;
-    top: 1px;
+  position: relative;
+  top: 1px;
 }
 
 .btn:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 label {
-    width: 189px;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 50px;
-	font-size: 25px;
-	color:#ffffff;
+  width: 189px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 50px;
+  font-size: 25px;
+  color: #ffffff;
 }
 
 #score {
-    background-color:#f56ede;
+  background-color: #f56ede;
 }
 
 #total {
-    background-color: grey;
+  background-color: grey;
 }
 
 .lowscore {
-    box-shadow: 3px 3px 10px 0px red;
+  box-shadow: 3px 3px 10px 0px red;
 }
 
 .info {
-    font-size: 15px;
-    color: #ACACAC;
-    font-weight: 400;
+  font-size: 15px;
+  color: #acacac;
+  font-weight: 400;
 }
